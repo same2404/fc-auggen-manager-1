@@ -1,0 +1,93 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isOwner() {
+      return isEmailVerified() && request.auth.token.email == 'samerkhaleel720@gmail.com';
+    }
+
+    function isApproved() {
+      return isSignedIn() && (
+        isOwner() || 
+        (exists(/databases/$(database)/documents/app_users/$(request.auth.uid)) && 
+         get(/databases/$(database)/documents/app_users/$(request.auth.uid)).data.status == 'approved')
+      );
+    }
+
+    // 1. Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. User Profiles
+    match /app_users/{userId} {
+      allow read: if isSignedIn() && (request.auth.uid == userId || isOwner());
+      allow create: if isSignedIn() && request.auth.uid == userId && request.resource.data.role == 'viewer' && request.resource.data.status == 'approved';
+      allow update: if (isSignedIn() && request.auth.uid == userId && request.resource.data.role == resource.data.role && request.resource.data.status == resource.data.status) || isOwner();
+      allow delete: if isOwner();
+    }
+
+    // 3. Access Requests
+    match /access_requests/{requestId} {
+      allow create: if isSignedIn();
+      allow read, update, delete: if isOwner();
+    }
+
+    // 4. Application Data (Public Access)
+    match /appState/{docId} { allow read, write: if true; }
+    match /spieler/{id} { allow read, write: if true; }
+    match /training/{id} { allow read, write: if true; }
+    match /vorbereitung_sommer/{id} { allow read, write: if true; }
+    match /vorbereitung_winter/{id} { allow read, write: if true; }
+    match /spiele/{id} { allow read, write: if true; }
+    match /budget_finanz/{id} { allow read, write: if true; }
+    match /audit_log/{id} { allow read, write: if true; }
+    match /attendance/{id} { allow read, write: if true; }
+    match /competitive_matches/{id} { allow read, write: if true; }
+    match /test_matches/{id} { allow read, write: if true; }
+    match /u23_matches/{id} { allow read, write: if true; }
+    match /competitive_planning/{id} { allow read, write: if true; }
+    match /test_planning/{id} { allow read, write: if true; }
+    match /u23_planning/{id} { allow read, write: if true; }
+    match /competitive_minutes/{id} { allow read, write: if true; }
+    match /test_minutes/{id} { allow read, write: if true; }
+    match /u23_minutes/{id} { allow read, write: if true; }
+    match /yearly_plan/{id} { allow read, write: if true; }
+    match /card_records/{id} { allow read, write: if true; }
+    match /scouting_candidates/{id} { allow read, write: if true; }
+    match /meetings_data/{id} { allow read, write: if true; }
+    match /training_sessions/{id} { allow read, write: if true; }
+    match /training_documents_global/{id} { allow read, write: if true; }
+    match /training_documents_content/{id} { allow read, write: if true; }
+    match /individual_training/{id} { allow read, write: if true; }
+    match /run_records/{id} { allow read, write: if true; }
+    match /physio_entries/{id} { allow read, write: if true; }
+    match /formation/{id} { allow read, write: if true; }
+    match /depth_chart/{id} { allow read, write: if true; }
+    match /finance_meta/{id} { allow read, write: if true; }
+    match /winter_prep_config/{id} { allow read, write: if true; }
+    match /matches/{id} { allow read, write: if true; }
+    match /match_analyses/{id} { allow read, write: if true; }
+    match /opponents/{id} { allow read, write: if true; }
+    match /run_meta/{id} { allow read, write: if true; }
+    match /tactic_setups/{id} { allow read, write: if true; }
+    match /player_performance/{id} { allow read, write: if true; }
+    match /player_performance_team/{id} { allow read, write: if true; }
+    match /player_session_logs/{id} { allow read, write: if true; }
+    match /academy_evaluations/{id} { allow read, write: if true; }
+    match /academy_weekly_reports/{id} { allow read, write: if true; }
+    match /tracker_academy_reports/{id} { allow read, write: if true; }
+    match /video_analyses/{id} { allow read, write: if true; }
+    match /custom_formations/{id} { allow read, write: if true; }
+    match /test/{id} { allow read, write: if true; }
+  }
+}

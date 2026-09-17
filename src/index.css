@@ -1,0 +1,590 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,700;1,900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-serif: "Playfair Display", serif;
+}
+
+:root {
+  /* Bundesliga Dark Mode (Haupttheme - Pomelli / Mixboard) */
+  --bg-app: #0A0E17;
+  --bg-dark: #0A0E17;
+  --bg-header: #121824;
+  --bg-panel: #1E293B;
+  --bg-segment: #121824;
+  --bg-card: #1E293B;
+  --text-primary: #F8FAFC;
+  --text-dark: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --color-border: #334155;
+  --btn-primary: #10B981;
+  --btn-primary-hover: #059669;
+  --btn-secondary: #1E293B;
+  --btn-secondary-hover: #334155;
+  --color-accent: #F59E0B;
+  --color-accent-hover: #FBBF24;
+  --color-cyan: #06B6D4;
+  --color-red: #E11D48;
+  --color-green: #10B981;
+  --legend-green: #10B981;
+  --pitch-green: #15803D;
+}
+
+/* Light Mode Option (Zweittheme) */
+html.light, body.light {
+  --bg-app: #F8FAFC;
+  --bg-dark: #F8FAFC;
+  --bg-header: #FFFFFF;
+  --bg-panel: #FFFFFF;
+  --bg-segment: #F1F5F9;
+  --bg-card: #FFFFFF;
+  --text-primary: #0F172A;
+  --text-dark: #0F172A;
+  --text-secondary: #64748B;
+  --color-border: #CBD5E1;
+  --btn-primary: #10B981;
+  --btn-primary-hover: #059669;
+  --btn-secondary: #E2E8F0;
+  --btn-secondary-hover: #CBD5E1;
+  --color-accent: #D97706;
+  --color-accent-hover: #F59E0B;
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-app) !important;
+    color: var(--text-primary) !important;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Tracker-Daten, GPS, km/h, BPM Font Utility */
+  .font-mono, .tracker-data, .gps-metric, .bpm-value, .speed-value {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace !important;
+  }
+
+  /* Global input, select, textarea legibility and contrast */
+  input:not(.bg-transparent), select:not(.bg-transparent), textarea:not(.bg-transparent) {
+    color: var(--text-primary) !important;
+    background-color: var(--bg-header) !important;
+    border-color: var(--color-border) !important;
+    font-weight: 500;
+    border-radius: 0.5rem;
+  }
+
+  input.bg-transparent, select.bg-transparent, textarea.bg-transparent {
+    background-color: transparent !important;
+    color: inherit;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: #10B981 !important;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3) !important;
+  }
+
+  option {
+    background-color: var(--bg-header) !important;
+    color: var(--text-primary) !important;
+  }
+
+  select option {
+    background-color: var(--bg-header) !important;
+    color: var(--text-primary) !important;
+  }
+
+  ::placeholder {
+    color: #64748B !important;
+    opacity: 1 !important;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: var(--bg-app);
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #10B981;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #475569;
+    border-radius: 9999px;
+  }
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: #10B981;
+  }
+}
+
+@layer components {
+  /* Digital SaaS & Bundesliga Pro Level Button & Panel Classes */
+  .btn-saas-primary {
+    background-color: #10B981 !important;
+    color: #0A0E17 !important;
+    font-weight: 800;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.45) !important;
+    transition: all 0.15s ease-in-out;
+  }
+  .btn-saas-primary:hover {
+    background-color: #059669 !important;
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.65) !important;
+  }
+
+  .btn-saas-secondary {
+    background-color: #1E293B !important;
+    color: #F8FAFC !important;
+    font-weight: 700;
+    border: 1px solid #334155 !important;
+    transition: all 0.15s ease-in-out;
+  }
+  .btn-saas-secondary:hover {
+    background-color: #334155 !important;
+  }
+
+  .btn-saas-warning {
+    background-color: #F59E0B !important;
+    color: #0A0E17 !important;
+    font-weight: 900;
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.45) !important;
+    transition: all 0.15s ease-in-out;
+  }
+  .btn-saas-warning:hover {
+    background-color: #FBBF24 !important;
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.65) !important;
+  }
+
+  .btn-saas-accent {
+    background-color: #F59E0B !important;
+    color: #0A0E17 !important;
+    font-weight: 900;
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.5) !important;
+    transition: all 0.15s ease-in-out;
+  }
+  .btn-saas-accent:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 0 18px rgba(245, 158, 11, 0.75) !important;
+  }
+
+  /* Legend Highlight Badge with Aura / Glow */
+  .legend-highlight-badge {
+    background-color: #1E293B !important;
+    color: #F8FAFC !important;
+    font-weight: 900 !important;
+    border: 2px solid #10B981 !important;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.6) !important;
+  }
+
+  .legend-highlight-green {
+    background-color: #1E293B !important;
+    color: #F8FAFC !important;
+    font-weight: 900 !important;
+    border: 2px solid #10B981 !important;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.6) !important;
+  }
+
+  .watermark-bg {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .watermark-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: url('https://storage.googleapis.com/static.aistudio.google.com/content/file-0-22');
+    background-repeat: no-repeat;
+    background-position: center 60%;
+    background-size: 50%;
+    filter: grayscale(100%) opacity(0.03);
+    pointer-events: none;
+  }
+
+  .watermark-bg > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 1.2cm !important;
+  }
+  
+  html, body, #root {
+    zoom: 1 !important;
+    transform: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    background: white !important;
+  }
+  
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    font-size: 11pt !important;
+    color: black !important;
+    background: white !important;
+  }
+
+  .print-hidden,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Force background colors and borders in print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    border-color: black !important;
+  }
+
+  /* Optimize the main training plan card to break naturally across multiple pages */
+  #training-plan-card {
+    border: 3px solid black !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    overflow: visible !important;
+    display: block !important;
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+  }
+
+  /* Prevent split-column layout from squeezing side-by-side on print */
+  #training-plan-card > div.flex,
+  #training-plan-card > div:nth-child(2),
+  #training-plan-card .flex.flex-1.min-h-\[600px\] {
+    display: block !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Stack main sections vertically */
+  #training-plan-card .w-1\/3,
+  #training-plan-card div[class*="w-1/3"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-right: none !important;
+    border-bottom: 3px solid black !important;
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  #training-plan-card .flex-1.flex.flex-col,
+  #training-plan-card div[class*="flex-1"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Compact text content inside print card (at least 12pt for text) */
+  #training-plan-card .p-4 {
+    padding: 8px 12px !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+  }
+
+  #training-plan-card .p-6 {
+    padding: 12px 16px !important;
+  }
+
+  #training-plan-card .p-2 {
+    padding: 4px 8px !important;
+  }
+
+  /* Inside warmup, main parts, and closing sections:
+     Stack the text and the images vertically instead of side-by-side */
+  #training-plan-card .flex-1.flex.min-h-0 {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  #training-plan-card .flex-1.flex.min-h-0 > div:first-child {
+    width: 100% !important;
+    border-bottom: 1px dashed black !important;
+    padding-bottom: 8px !important;
+  }
+
+  /* Make images during printing highly visible, crisp, and readable */
+  #training-plan-card img {
+    max-height: 200px !important;
+    height: 200px !important; /* Force a consistent readable height */
+    width: auto !important;
+    object-fit: contain !important;
+    border: 2px solid black !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+    background: white !important;
+    display: block !important;
+    margin: 4px !important;
+  }
+
+  /* Custom wrapping container for images inside each section during print */
+  #training-plan-card .print\:flex-wrap {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+    width: 100% !important;
+    max-width: none !important;
+    background: white !important;
+    padding: 8px !important;
+    border: none !important;
+    overflow: visible !important;
+  }
+
+  /* Ensure the ImageUpload container and its parent overflow-hidden wrappers
+     do not constrain or clip images in print layout */
+  #training-plan-card .print\:flex-wrap > div {
+    width: auto !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    border: none !important;
+  }
+
+  #training-plan-card .print\:flex-wrap > div > div {
+    width: auto !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+    border: none !important;
+  }
+
+  /* Convert the player attendance list into a highly readable full-width grid */
+  .player-list-print-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important; /* 3 balanced columns across the wide space */
+    align-content: start !important;
+    gap: 4px !important;
+    padding: 8px !important;
+    background-color: white !important;
+    border: none !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Style each player cell in the grid */
+  .player-list-print-grid > div {
+    padding: 4px 8px !important;
+    border: 1.5px solid black !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    font-size: 10pt !important;
+    height: 36px !important;
+    box-sizing: border-box !important;
+    background: white !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Ensure background colors of attendance states (1, A, B) are printed correctly */
+  .player-list-print-grid .bg-green-500 {
+    background-color: #22c55e !important;
+    color: white !important;
+  }
+  .player-list-print-grid .bg-yellow-400 {
+    background-color: #facc15 !important;
+    color: black !important;
+  }
+  .player-list-print-grid .bg-red-600 {
+    background-color: #dc2626 !important;
+    color: white !important;
+  }
+
+  /* Fix for separator rows to span all columns */
+  .player-list-print-grid .bg-gray-200,
+  .player-list-print-grid .print\:col-span-2 {
+    grid-column: 1 / -1 !important; /* Span across all 3 columns */
+    height: auto !important;
+    padding: 6px 12px !important;
+    background-color: #f3f4f6 !important;
+    border: 1.5px solid black !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+  }
+
+  /* Compact player avatar and status badges */
+  .player-list-print-grid span {
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 9pt !important;
+    border-width: 1.5px !important;
+    line-height: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .player-list-print-grid p {
+    font-size: 10pt !important;
+    font-weight: 800 !important;
+    line-height: 1.1 !important;
+    color: black !important;
+  }
+
+  .player-list-print-grid .w-6.h-6 {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .player-list-print-grid .w-14 {
+    display: block !important; /* Keep positions printed so they are readable! */
+    border-left: 1px solid #ccc !important;
+    padding-left: 6px !important;
+  }
+
+  /* Keep important sections from breaking awkwardly across pages */
+  .print\:avoid-break {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}
+
+/* ==========================================
+   AUTOMATIC MOBILE RESPONSIVENESS BOOSTER
+   ========================================== */
+@media (max-width: 1024px) {
+  /* Tables auto-scrollable and responsive */
+  table {
+    display: block !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Make sure columns do not wrap and squeeze unreadably */
+  table th, 
+  table td {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Compact button paddings and sizes on mobile */
+  button, 
+  .button, 
+  a[class*="bg-"],
+  button[class*="bg-"] {
+    padding-top: 0.4rem !important;
+    padding-bottom: 0.4rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    font-size: 11px !important;
+  }
+
+  /* Sizing down the titles slightly for mobile */
+  h1 {
+    font-size: 1.5rem !important;
+  }
+  h2 {
+    font-size: 1.25rem !important;
+  }
+  h3 {
+    font-size: 1.1rem !important;
+  }
+
+  /* Compact spacing for cards and grids */
+  .p-8 {
+    padding: 1rem !important;
+  }
+  .p-6 {
+    padding: 0.85rem !important;
+  }
+  .p-4 {
+    padding: 0.75rem !important;
+  }
+
+  /* Compact spacing utilities */
+  .space-y-8 > * + * {
+    margin-top: 1rem !important;
+  }
+  .space-y-6 > * + * {
+    margin-top: 0.75rem !important;
+  }
+  .gap-8 {
+    gap: 1rem !important;
+  }
+  .gap-6 {
+    gap: 0.75rem !important;
+  }
+
+  /* Mobile text sizes */
+  .text-xs {
+    font-size: 10px !important;
+  }
+  .text-sm {
+    font-size: 12px !important;
+  }
+  .text-base {
+    font-size: 14px !important;
+  }
+
+  /* Forms optimization */
+  input, 
+  select, 
+  textarea {
+    font-size: 12px !important;
+    padding: 0.4rem 0.6rem !important;
+  }
+}
+
+@media print {
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+  
+  /* Show print report element if printing */
+  #runs-pdf-report {
+    display: block !important;
+    width: 100% !important;
+  }
+}
+
